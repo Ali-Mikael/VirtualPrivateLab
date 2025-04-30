@@ -1,2 +1,9 @@
-# VirtualPrivateLab
-Private virtual lab with vagrant and salt
+# Virtual Private Lab
+### Create a private virtual lab with Vagrant and Salt 
+
+## How to use:
+
+```
+$ vagrant up
+´´´
+
