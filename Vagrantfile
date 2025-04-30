@@ -20,6 +20,7 @@ $master = <<MASTER
 curl -L https://bootstrap.saltproject.io -o install_salt.sh
 sudo sh install_salt.sh -P -M
 echo "auto_accept: True" | sudo tee -a /etc/salt/master
+sudo mkdir -p /srv/salt
 sudo systemctl enable salt-master
 sudo systemctl restart salt-master
 MASTER
@@ -27,8 +28,8 @@ MASTER
 
 Vagrant.configure("2") do |config|
 	config.vm.box = "bento/ubuntu-24.04"
-	config.vm.synced_folder ".", "/vagrant", disabled: true
-	config.vm.synced_folder "shared/", "/home/vagrant/shared", create: true
+	# Sync salt states to /srv/salt
+	config.vm.synced_folder "./salt", "/srv/salt"
 
 	
 	config.vm.provider "virtualbox" do |vb|
