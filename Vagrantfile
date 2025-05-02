@@ -6,30 +6,32 @@
 
 $initscript = <<INITSCRIPT
 set -o verbose
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl
+apt update
+apt upgrade -y
+apt install -y curl
 INITSCRIPT
+
 
 # Salt-Minion setup script
 # -------------------
 $minion = <<MINION
 curl -L https://bootstrap.saltproject.io -o install_salt.sh
-sudo sh install_salt.sh -P
-echo "master: 192.168.88.100" | sudo tee /etc/salt/minion
-echo "id: $(hostname)" | sudo tee -a /etc/salt/minion
-sudo systemctl enable salt-minion
-sudo systemctl restart salt-minion
+sh install_salt.sh -P
+echo "master: 192.168.88.100" | tee /etc/salt/minion
+echo "id: $(hostname)" | tee -a /etc/salt/minion
+systemctl enable salt-minion
+systemctl restart salt-minion
 MINION
 
 # Salt-Master setup script
 # ------------------------
 $master = <<MASTER
 curl -L https://bootstrap.saltproject.io -o install_salt.sh
-sudo sh install_salt.sh -P -M
+sh install_salt.sh -P -M
 echo "auto_accept: True" | sudo tee -a /etc/salt/master
-sudo mkdir -p /srv/salt
-sudo systemctl enable salt-master
-sudo systemctl restart salt-master
+mkdir -p /srv/salt
+systemctl enable salt-master
+systemctl restart salt-master
 MASTER
 
 
