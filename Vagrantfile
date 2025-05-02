@@ -28,7 +28,8 @@ MINION
 $master = <<MASTER
 curl -L https://bootstrap.saltproject.io -o install_salt.sh
 sh install_salt.sh -P -M
-echo "auto_accept: True" | sudo tee -a /etc/salt/master
+echo "interface: 192.168.88.100" | tee -a /etc/salt/master
+echo "auto_accept: True" | tee -a /etc/salt/master
 mkdir -p /srv/salt
 systemctl enable salt-master
 systemctl restart salt-master

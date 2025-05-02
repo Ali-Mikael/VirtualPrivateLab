@@ -12,7 +12,10 @@ ssh-server:
 #
 /etc/ssh/sshd_config:
   file.managed:
-    - source: salt://common/files/ssh/sshd_config
+    - source: salt://common/files/sshd_config
+    - user: root
+    - group: root
+    - mode: 600
     - require:
       - pkg: ssh-server
 
@@ -20,11 +23,11 @@ ssh-server:
 # - Service enabled / up & running -
 #
 sshd:
-  service.runing:
+  service.running:
     - name: ssh
     - enable: True
-    - require:
-      - pkg: ssh-server
+    - reload: True
     - watch:
       - file: /etc/ssh/sshd_config
-      
+    - require:
+      - pkg: ssh-server

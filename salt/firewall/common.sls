@@ -12,7 +12,7 @@ ufw_allow_ssh:
   ufw.allow:
     - name: OpenSSH
     - require: 
-      - ufw: ufw_enable
+      - pkg: ufw
 
 
 ufw_service:
@@ -20,4 +20,4 @@ ufw_service:
     - name: ufw
     - enable: True
     - require: 
-      - pgk: ufw
+      - pkg: ufw

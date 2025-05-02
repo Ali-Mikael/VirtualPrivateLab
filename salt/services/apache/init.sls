@@ -3,7 +3,7 @@
 
 # - Apache install -
 # 
-apache_pkg:
+apache:
   pkg.installed:
     - name: apache2
 
@@ -12,19 +12,19 @@ apache_pkg:
 #
 apache_service:
   service.running:
-    - name: apache
+    - name: apache2
     - enable: True
     - require:
-      - pgk: apache_pkg
+      - pgk: apache
 
 
 # - Managing the index file -
 #
 /var/www/html/index.html:
   file.managed:
-    - source: salt://apache/sites/index.html
-    - user: root
-    - group: root
+    - source: salt://services/apache/sites/index.html
+    - user: www-data
+    - group: www-data
     - mode: 644
     - require:
-      - pkg: apache_pkg
+      - pkg: apache
