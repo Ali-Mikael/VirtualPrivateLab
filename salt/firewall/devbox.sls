@@ -1,14 +1,21 @@
 # /srv/salt/firewall/devbox.sls
 
 
+# - firewall.common will download UFW, allow SSH and enable it -
+#
 include:
   - firewall.common
 
+
+# - Allowing DB traffic -
+#
 allow_mysql:
   ufw.allow:
     - name: 3306/tcp
 
 
+# - Allowing http/https traffic -
+#
 allow_http:
   ufw.allow:
     - name: 80/tcp

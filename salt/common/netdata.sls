@@ -1,7 +1,7 @@
-# - Netdata install -
-#
 # /srv/salt/common/netdata.sls
 
+# - Netdata install -
+#
 netdata:
   pkg.installed:
     - name: netdata
@@ -25,5 +25,5 @@ netdata_service:
 #    - group: root
 #    - mode: 644
 #    - require:
-#      - pkg: netdata_package
+#      - pkg: netdata
 

@@ -1,23 +1,28 @@
 # /srv/salt/firewall/common.sls
 
+
+# - UFW install -
+#
 ufw: pkg.installed
 
-ufw_enable:
-  ufw.enabled:
-    - require: 
-      - pkg: ufw
 
-
+# - Making a hole in the fw for SSH -
+#
 ufw_allow_ssh:
   ufw.allow:
     - name: OpenSSH
-    - require: 
+    - require:
       - pkg: ufw
 
+# - Allowing netdata traffic on its respective port-
+#
+ufw_allow_netdata:
+  ufw.allow:
+    - name: 19999/tcp
 
-ufw_service:
-  service.running:
-    - name: ufw
-    - enable: True
+# - Ensuring firewall is enabled -
+#
+ufw_enable:
+  ufw.enabled:
     - require: 
       - pkg: ufw
