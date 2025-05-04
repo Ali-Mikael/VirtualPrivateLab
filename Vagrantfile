@@ -1,9 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Shell scripts for provisioning
-# -----------------------------
 
+# Basic provision script to be used for all VMs
+# ---------------------------------------------
 $initscript = <<INITSCRIPT
 set -o verbose
 apt update && apt upgrade -y
@@ -11,7 +11,7 @@ apt install -y curl
 INITSCRIPT
 
 
-# Salt-Minion setup script
+# Salt-Minion provision script
 # -------------------
 $minion = <<MINION
 curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
@@ -44,9 +44,6 @@ Vagrant.configure("2") do |config|
 	# Using Bento's ubuntu 24.04 for the base box
 	config.vm.box = "bento/ubuntu-24.04"
 
-	# Sync salt states folder to /srv/salt on the master VM
-	config.vm.synced_folder "./salt", "/srv/salt"
-
 	# Virtualbox specific configurations for VMs
 	config.vm.provider "virtualbox" do |vb|
 	  vb.linked_clone = true	# Use linked clones to speed up VM creation
@@ -60,6 +57,9 @@ Vagrant.configure("2") do |config|
 	config.vm.define "master" do |master|
 	  master.vm.hostname = "master"
 	  master.vm.network "private_network", ip: "192.168.88.100"
+
+          # Syncing the salt folder to salt-master under /srv/salt
+          master.vm.synced_folder "./salt", "/srv/salt"
 
 	  # Provision the master VM
 	  master.vm.provision "shell", inline: $initscript
