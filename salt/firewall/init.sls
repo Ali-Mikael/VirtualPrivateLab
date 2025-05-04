@@ -3,7 +3,8 @@
 
 # - UFW install -
 #
-ufw: pkg.installed
+ufw: 
+  pkg.installed
 
 
 # - Making a hole in the fw for SSH -
