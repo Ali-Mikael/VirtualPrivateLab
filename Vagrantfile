@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
 	
 	# Defining the Salt-master
 	# ------------------------
-	config.vm.define "master", primary: true do |master|
+	config.vm.define "master" do |master|
 	  master.vm.hostname = "master"
 	  master.vm.network "private_network", ip: "192.168.88.100"
 
