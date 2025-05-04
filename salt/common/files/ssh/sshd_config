@@ -1,22 +1,22 @@
 Include /etc/ssh/sshd_config.d/*
 
 Protocol 2
-Port 222
+Port 22
 PermitRootLogin no
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-#HostKey /etc/ssh/ssh_host_rsa_key
-#HostKey /etc/ssh/ssh_host_ecdsa_key
-#HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
 
 # Ciphers and keying
 #RekeyLimit default none
 
 # Logging
 #SyslogFacility AUTH
-#LogLevel INFO
+LogLevel INFO
 
 # Authentication:
 
@@ -45,7 +45,7 @@ AuthorizedKeysFile	.ssh/authorized_keys
 
 # To disable tunneled clear text passwords, change to no here!
 PasswordAuthentication yes
-#PermitEmptyPasswords no
+PermitEmptyPasswords no
 
 # Change to no to disable s/key passwords
 #KbdInteractiveAuthentication yes
