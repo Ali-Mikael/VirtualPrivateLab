@@ -4,6 +4,5 @@
 #
 include:
   - firewall.devbox
-  - langs.python
-  - langs.java
+  - langs
 

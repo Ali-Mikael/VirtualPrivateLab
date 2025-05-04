@@ -1,10 +1,10 @@
 # /srv/salt/firewall/devbox.sls
 
 
-# - firewall.common will download UFW, allow SSH and enable it -
+# - firewall.init will download UFW, allow SSH and enable it -
 #
 include:
-  - firewall.common
+  - firewall.init
 
 
 # - Allowing DB traffic -

@@ -1,10 +1,10 @@
 # /srv/salt/firewall/webserv.sls
 
 
-# - firewall.common will download UFW, allow SSH and enable it -
+# - firewall.init will download UFW, allow SSH and enable it -
 #
 include:
-  - firewall.common
+  - firewall.init
 
 # - Allowing DB and http/https traffic here -
 #

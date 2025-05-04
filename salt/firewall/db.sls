@@ -1,9 +1,9 @@
 # /srv/salt/firewall/db.sls
 
-# - firewall.common will download UFW, allow SSH and enable it -
+# - firewall.init will download UFW, allow SSH and enable it -
 #
 include:
-  - firewall.common
+  - firewall.init
 
 
 # - Allowing the DB traffic -

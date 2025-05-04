@@ -1,4 +1,4 @@
-# /srv/salt/firewall/common.sls
+# /srv/salt/firewall/init.sls
 
 
 # - UFW install -
@@ -14,15 +14,11 @@ ufw_allow_ssh:
     - require:
       - pkg: ufw
 
-# - Allowing netdata traffic on its respective port-
-#
-ufw_allow_netdata:
-  ufw.allow:
-    - name: 19999/tcp
 
 # - Ensuring firewall is enabled -
 #
-ufw_enable:
+enable_ufw:
   ufw.enabled:
     - require: 
       - pkg: ufw
+
