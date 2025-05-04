@@ -6,8 +6,7 @@
 
 $initscript = <<INITSCRIPT
 set -o verbose
-apt update
-apt upgrade -y
+apt update && apt upgrade -y
 apt install -y curl
 INITSCRIPT
 
@@ -15,10 +14,10 @@ INITSCRIPT
 # Salt-Minion setup script
 # -------------------
 $minion = <<MINION
-curl -L https://bootstrap.saltproject.io -o install_salt.sh
-sh install_salt.sh -P
-echo "master: 192.168.88.100" | tee /etc/salt/minion
-echo "id: $(hostname)" | tee -a /etc/salt/minion
+curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
+sh bootstrap-salt.sh -P
+echo "master: 192.168.88.100" >> /etc/salt/minion
+echo "id: $(hostname)" >> /etc/salt/minion
 systemctl enable salt-minion
 systemctl restart salt-minion
 MINION
@@ -26,10 +25,10 @@ MINION
 # Salt-Master setup script
 # ------------------------
 $master = <<MASTER
-curl -L https://bootstrap.saltproject.io -o install_salt.sh
-sh install_salt.sh -P -M
-echo "interface: 192.168.88.100" | tee -a /etc/salt/master
-echo "auto_accept: True" | tee -a /etc/salt/master
+curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
+sh bootstrap-salt.sh -P -M
+echo "interface: 192.168.88.100" >> /etc/salt/master
+echo "auto_accept: True" >> /etc/salt/master
 mkdir -p /srv/salt
 systemctl enable salt-master
 systemctl restart salt-master
