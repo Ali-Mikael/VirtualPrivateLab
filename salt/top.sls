@@ -4,7 +4,7 @@ base:
 
   # Defining states to apply to all minions
   # ---------------------------------------
-  '*'
+  '*':
     - common.ssh
     - common.git
 
