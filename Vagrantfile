@@ -81,8 +81,9 @@ Vagrant.configure("2") do |config|
 	  master.vm.hostname = "master"
 	  master.vm.network "private_network", ip: "192.168.88.100"
 
-          # Syncing the salt folder to salt-master under /srv/salt (the file roots path)
-          master.vm.synced_folder "./salt", "/srv/salt"
+          # Syncing the repo salt folder to salt-master under /srv/salt (the file roots path)
+          # Use rsync instead of VBadditions syncing
+          master.vm.synced_folder "./salt", "/srv/salt", type: "rsync", rsync__auto: true
 
 	  # Provision the master VM
 	  master.vm.provision "shell", inline: $initscript
