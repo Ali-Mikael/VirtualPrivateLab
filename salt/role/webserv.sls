@@ -3,7 +3,7 @@
 # - Web server role -
 #
 include:
-  - firewall.webserv
-  - services.apache
   - langs.python
   - langs.java
+  - services.apache
+  - firewall.webserv
