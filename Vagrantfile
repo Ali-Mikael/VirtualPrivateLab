@@ -67,6 +67,9 @@ Vagrant.configure("2") do |config|
 	# Using Bento's ubuntu 24.04 for the base box
 	config.vm.box = "bento/ubuntu-24.04"
 
+        # Disable VBox shared folder (using rsync instead)
+        config.vm.synced_folder ".", "/vagrant", disabled: true
+
 	# Virtualbox specific configurations for VMs
 	config.vm.provider "virtualbox" do |vb|
 	  vb.linked_clone = true	# Use linked for more agile/speedy VM creation
