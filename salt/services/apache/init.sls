@@ -3,9 +3,8 @@
 
 # - Apache install -
 # 
-apache:
-  pkg.installed:
-    - name: apache2
+apache2:
+  pkg.installed
 
 
 # - Ensuring the service is enabled & running -
@@ -15,7 +14,7 @@ apache_service:
     - name: apache2
     - enable: True
     - require:
-      - pgk: apache
+      - pgk: apache2
 
 
 # - Managing the index file -
@@ -27,4 +26,4 @@ apache_service:
     - group: www-data
     - mode: 644
     - require:
-      - pkg: apache
+      - pkg: apache2
