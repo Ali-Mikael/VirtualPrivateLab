@@ -54,7 +54,7 @@ echo "    - /srv/salt" >> /etc/salt/master.d/file_roots.conf
 
 # > Ensuring /srv/salt has correct permissions
 chown root:root /srv/salt
-chmod 700 /srv/salt
+chmod 755 /srv/salt
 
 # > Enable and restart for configs to take place
 systemctl enable salt-master
