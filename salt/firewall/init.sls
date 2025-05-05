@@ -1,5 +1,9 @@
 # /srv/salt/firewall/init.sls
 
+# - Ensuring the UFW module is installed as we are using the bootstrap version of salt -
+#
+python3-ufw:
+  pkg.installed
 
 # - UFW install -
 #
