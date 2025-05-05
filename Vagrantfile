@@ -30,6 +30,9 @@ sh bootstrap-salt.sh -P -M
 echo "interface: 192.168.88.100" >> /etc/salt/master
 echo "auto_accept: True" >> /etc/salt/master
 mkdir -p /srv/salt
+echo "file_roots:" >> /etc/salt/master/master.d/file_roots.conf
+echo "  base:" >> /etc/salt/master/master.d/file_roots.conf
+echo "    - /srv/salt" >> /etc/salt/master/master.d/file_roots.conf
 systemctl enable salt-master
 systemctl restart salt-master
 MASTER
