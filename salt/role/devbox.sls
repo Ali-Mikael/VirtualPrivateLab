@@ -3,6 +3,6 @@
 # - Developer workstation role -
 #
 include:
-  - firewall.devbox
   - langs
+  - services.docker
 

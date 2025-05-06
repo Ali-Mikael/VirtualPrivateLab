@@ -1,4 +1,4 @@
-/srv/salt/services/docker.sls
+/srv/salt/services/docker/init.sls
 
 # - Install docker -
 #
