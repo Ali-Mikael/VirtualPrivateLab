@@ -22,7 +22,7 @@ $minion = <<MINION
 curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
 sh bootstrap-salt.sh -P
 
-# > Giving the minion contact details for the master
+# > Configure Master contact details and hostname for the minion
 echo "master: 192.168.88.100" >> /etc/salt/minion
 echo "id: $(hostname)" >> /etc/salt/minion
 
@@ -99,10 +99,19 @@ Vagrant.configure("2") do |config|
 
 
 	# Defining Salt-minions
-	(1..3).each do |i|
-	  config.vm.define "minion0#{i}" do |minion|
-	    minion.vm.hostname = "minion0#{i}"
-	    minion.vm.network "private_network", ip: "192.168.88.10#{i}"
+        # ---------------------
+	minions = {
+	"devbox" => "192.168.88.101",
+	"web-serv" => "192.168.88.102",
+	"db-serv" => "192.168.88.103"
+	}
+
+	minions.each do |name, ip|
+	  config.vm.define name do |minion|
+
+	    # Configure names and IP-addressing
+	    minion.vm.hostname = name
+	    minion.vm.network "private_network", ip: ip
 
 	    # Provision each minion VM
 	    minion.vm.provision "shell", inline: $initscript
