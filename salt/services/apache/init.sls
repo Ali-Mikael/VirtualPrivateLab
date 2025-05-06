@@ -14,7 +14,7 @@ apache_service:
     - name: apache2
     - enable: True
     - require:
-      - pgk: apache2
+      - pkg: apache2
 
 
 # - Managing the index file -
