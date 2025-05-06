@@ -3,6 +3,6 @@
 # - Define the database server role -
 #
 include:
-  - service.dbserver
+  - service.database
   - lang.python
 

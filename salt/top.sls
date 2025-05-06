@@ -2,8 +2,8 @@
 
 base:
 
-  # Defining minion specific states
-  # -------------------------------
+  # Define roles for minions
+  # ------------------------
 
   'devbox':
     - role.devbox
@@ -12,5 +12,5 @@ base:
     - role.webserv
 
   'db-serv':
-    - role.db
+    - role.dbserv
 
