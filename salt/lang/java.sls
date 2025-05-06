@@ -1,4 +1,4 @@
-# /srv/salt/langs/java.sls
+# /srv/salt/lang/java.sls
 
 # - java install -
 #

@@ -1,4 +1,4 @@
-# /srv/salt/langs/python.sls
+# /srv/salt/lang/python.sls
 
 # - python/pip install -
 #

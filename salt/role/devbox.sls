@@ -3,7 +3,8 @@
 # - Define the developer workstation role -
 #
 include:
-  - langs
-  - services.docker
-  - common.git
+  - lang
+  - tool
+  - service.docker
   - common.ssh
+  - common.git

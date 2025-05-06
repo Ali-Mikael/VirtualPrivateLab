@@ -3,6 +3,6 @@
 # - Define the web server role -
 #
 include:
-  - langs.python
-  - langs.java
-  - services.apache
+  - lang.python
+  - lang.java
+  - service.apache

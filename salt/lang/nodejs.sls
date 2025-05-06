@@ -1,4 +1,4 @@
-# /srv/salt/langs/nodejs.sls
+# /srv/salt/lang/nodejs.sls
 
 # - Install javascript -
 #

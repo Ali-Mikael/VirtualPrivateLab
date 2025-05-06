@@ -1,4 +1,4 @@
-# /srv/salt/apache/init.sls
+# /srv/salt/service/apache/init.sls
 
 
 # - Apache install -
@@ -21,7 +21,7 @@ apache_service:
 #
 /var/www/html/index.html:
   file.managed:
-    - source: salt://services/apache/sites/index.html
+    - source: salt://service/apache/sites/index.html
     - user: www-data
     - group: www-data
     - mode: 644
