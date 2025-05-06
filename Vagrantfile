@@ -5,69 +5,69 @@
 # Basic setup script for all VMs
 # ------------------------------
 $initscript = <<-INITSCRIPT
-set -o verbose
-apt update && apt upgrade -y
-apt install -y curl
+  set -o verbose
+  apt update && apt upgrade -y
+  apt install -y curl
 INITSCRIPT
 
 # Install Salt
 # ---------------
 
-salt_install_bootstrap = = <<-SCRIPT
-# If using bootstrap method remove "apt install" from the Minion/Master script
-# See https://docs.saltproject.io/salt/install-guide/en/latest/ for more
-curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
-sh bootstrap-salt.sh -P
+$salt_install_bootstrap = <<-SCRIPT
+  # If using bootstrap method remove "apt install" from the Minion/Master script
+  # See https://docs.saltproject.io/salt/install-guide/en/latest/ for more
+  curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
+  sh bootstrap-salt.sh -P
 SCRIPT
 
-salt_install_apt = <<-SCRIPT
-# Ensure keyrings dir exists
-mkdir -p /etc/apt/keyrings
-# Download public key
-curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
-# Create apt repo target configuration
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
-apt update
+$salt_install_apt = <<-SCRIPT
+  # Ensure keyrings dir exists
+  mkdir -p /etc/apt/keyrings
+  # Download public key
+  curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
+  # Create apt repo target configuration
+  curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
+  apt update
 SCRIPT
 
 # Salt-Minion setup script
 # ------------------------
-$minion = <<MINION
-# Install the salt-minion
-apt install salt-minion
+$minion = <<-MINION
+  # Install the salt-minion
+  apt install salt-minion -y
 
-# Configure Master contact details and hostname for the minion
-echo "master: 192.168.88.100" >> /etc/salt/minion
-echo "id: $(hostname)" >> /etc/salt/minion
+  # Configure Master contact details and hostname for the minion
+  echo "master: 192.168.88.100" >> /etc/salt/minion
+  echo "id: $(hostname)" >> /etc/salt/minion
 
-# Enable and restart service for configs to take place
-systemctl enable salt-minion && systemctl restart salt-minion
+  # Enable and restart service for configs to take place
+  systemctl enable salt-minion && systemctl restart salt-minion
 MINION
 
 
 # Salt-Master setup script
 # ------------------------
-$master = <<MASTER
-# Installing salt-master
-apt install salt-master
+$master = <<-MASTER
+  # Installing salt-master
+  apt install salt-master -y
 
-# Specifying the masters ip-address to the config file and auto accepting minion-keys
-# Note: Auto accepting should only be done in test/dev environments, not for production!
-echo "interface: 192.168.88.100" >> /etc/salt/master
-echo "auto_accept: True" >> /etc/salt/master
+  # Specifying the masters ip-address to the config file and auto accepting minion-keys
+  # Note: Auto accepting should only be done in test/dev environments, not for production!
+  echo "interface: 192.168.88.100" >> /etc/salt/master
+  echo "auto_accept: True" >> /etc/salt/master
 
-# Creating the file_roots path for salt and telling it where to look
-mkdir -p /srv/salt
-echo "file_roots:" >> /etc/salt/master.d/file_roots.conf
-echo "  base:" >> /etc/salt/master.d/file_roots.conf
-echo "    - /srv/salt" >> /etc/salt/master.d/file_roots.conf
+  # Creating the file_roots path for salt and telling it where to look
+  mkdir -p /srv/salt
+  echo "file_roots:" >> /etc/salt/master.d/file_roots.conf
+  echo "  base:" >> /etc/salt/master.d/file_roots.conf
+  echo "    - /srv/salt" >> /etc/salt/master.d/file_roots.conf
 
-# Ensuring /srv/salt has correct permissions
-chown root:root /srv/salt
-chmod 755 /srv/salt
+  # Ensuring /srv/salt has correct permissions
+  chown root:root /srv/salt
+  chmod 755 /srv/salt
 
-# Enable and restart for configs to take place
-systemctl enable salt-master && systemctl restart salt-master
+  # Enable and restart for configs to take place
+  systemctl enable salt-master && systemctl restart salt-master
 MASTER
 
 
