@@ -2,20 +2,15 @@
 
 base:
 
-  # Defining states to apply to all minions
-  # ---------------------------------------
-  '*':
-    - common.ssh
-    - common.git
-
   # Defining minion specific states
   # -------------------------------
-  'minion01':
+
+  'devbox':
     - role.devbox
 
-  'minion02':
+  'web-serv':
     - role.webserv
 
-  'minion03':
+  'db-serv':
     - role.db
 

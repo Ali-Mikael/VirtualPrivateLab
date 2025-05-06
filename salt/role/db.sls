@@ -1,7 +1,8 @@
 # /srv/salt/role/db.sls
 
-# - Database role -
+# - Define the database server role -
 #
 include:
   - services.dbserver
   - langs.python
+

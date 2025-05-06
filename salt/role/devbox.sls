@@ -1,8 +1,9 @@
 # /srv/salt/role/devbox.sls
 
-# - Developer workstation role -
+# - Define the developer workstation role -
 #
 include:
   - langs
   - services.docker
-
+  - common.git
+  - common.ssh
