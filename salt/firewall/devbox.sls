@@ -1,27 +1,39 @@
 # /srv/salt/firewall/devbox.sls
 
 # - Making sure firewall is properly installed by first running firewall/init.sls -
-#                                
+#
 include:
-  - firewall 
+  - firewall
 
 
-# - Allow SSH -
-# Change "-name: ssh" to --> "-port: <number>/tcp" if using a different port for ssh 
+# - Enable and start firewalld -
 #
-allow_ssh:
-  firewalld.present:
-    - name: ssh
-    - zone: public
-    - permanent: True
-    - immediate: True
-
-
-# - Enable & Start -
-#
-enable_firewalld:
+firewalld_service:
   service.running:
     - name: firewalld
     - enable: True
+
+
+# - Allow SSH -
+# Change the port value if SSH runs on a non-standard port
+#
+allow_ssh:
+  module.run:
+    - name: firewalld.add_service
+    - zone: public
+    - service: ssh
+    - permanent: True
+    - unless: "firewall-cmd --zone=public --list-services | grep -w 'ssh'"
     - require:
-      - firewalld: allow_ssh
+      - service: firewalld_service
+
+
+# - Reload firewalld to apply changes (fallback to cmd.run if needed) -
+#
+firewalld_reload:
+  cmd.run:
+    - name: firewall-cmd --reload
+    - onlyif: "systemctl is-active --quiet firewalld"
+    - onchanges:
+      - module: allow_ssh
+
