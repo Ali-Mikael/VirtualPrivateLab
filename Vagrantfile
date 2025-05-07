@@ -78,6 +78,8 @@ MASTER
 Vagrant.configure("2") do |config|
 	
 	# Using Bento's ubuntu 24.04 for the base box
+        # Find the box that best suits your needs at:
+	# https://portal.cloud.hashicorp.com/vagrant/discover
 	config.vm.box = "bento/ubuntu-24.04"
 
         # Disable VBox shared folder (using rsync instead)
