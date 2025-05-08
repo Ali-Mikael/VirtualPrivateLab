@@ -4,7 +4,7 @@
 
 # Basic setup script for all VMs
 # ------------------------------
-$initscript = <<-INITSCRIPT
+$initscript = <<-'INITSCRIPT'
   set -o verbose
   apt update && apt upgrade -y
   apt install -y curl tree gnupg
@@ -70,9 +70,19 @@ $master = <<-'MASTER'
   echo "  base:" >> /etc/salt/master.d/file_roots.conf
   echo "    - /srv/salt" >> /etc/salt/master.d/file_roots.conf
 
-  # Ensuring /srv/salt has correct permissions
+  # Ensuring correct permissions
   chown root:root /srv/salt
   chmod 755 /srv/salt
+
+  # Doing the same for pillar
+  mkdir -p /srv/pillar
+  echo "pillar_roots:" >> /etc/salt/master.d/pillar_roots.conf
+  echo "  base:" >> /etc/salt/master.d/pillar_roots.conf
+  echo "    - /srv/pillar" >> /etc/salt/master.d/pillar_roots.conf
+
+  # Ensuring correct permissions
+  chown root:root /srv/pillar
+  chmod 755 /srv/pillar
 
   # Enable and restart for configs to take place
   systemctl enable salt-master && systemctl restart salt-master
@@ -110,9 +120,10 @@ Vagrant.configure("2") do |config|
 	  master.vm.hostname = "master"
 	  master.vm.network "private_network", ip: "192.168.88.100"
 
-          # Syncing salt folder to salt-master
+          # Syncing salt & pillar directories to salt-master
           # Use rsync instead of VBoxAdditions syncing
           master.vm.synced_folder "./salt", "/srv/salt", type: "rsync", rsync__auto: true
+	  master.vm.synced_folder "./pillar", "/srv/pillar", type: "rsync", rsync__auto: true
 
 	  # Provision the master VM
 	  master.vm.provision "shell", inline: $initscript
