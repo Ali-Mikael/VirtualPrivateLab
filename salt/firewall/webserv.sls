@@ -1,6 +1,6 @@
 # /srv/salt/firewall/webserv.sls
 
-# - Making sure firewall is properly installed by first running firewall/init.sls -
+# - Ensure firewall is installed - 
 #
 include:
   - firewall
@@ -53,7 +53,7 @@ allow_https:
       - service: firewalld_service
 
 
-# - Reload firewalld to apply changes (safe fallback with cmd.run) -
+# - Reload firewalld to apply changes -
 #
 firewalld_reload:
   cmd.run:

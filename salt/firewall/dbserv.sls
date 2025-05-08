@@ -1,6 +1,6 @@
 # /srv/salt/firewall/db.sls
 
-# - Making sure firewall is properly installed by first running firewall/init.sls -
+# - Ensure firewall is installed - 
 #
 include:
   - firewall 
@@ -39,7 +39,7 @@ allow_ssh:
       - service: firewalld_service
 
 
-# Reload firewalld to apply changes (fallback if module is missing)
+# Reload firewalld to apply changes
 firewalld_reload:
   cmd.run:
     - name: firewall-cmd --reload

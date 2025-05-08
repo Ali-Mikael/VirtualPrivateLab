@@ -1,4 +1,4 @@
-# /srv/salt/service/dbserver/init.sls
+# /srv/salt/service/mysql/init.sls
 
 # - Install mysql -
 #

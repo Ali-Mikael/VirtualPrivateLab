@@ -3,6 +3,6 @@
 # - Define the database server role -
 #
 include:
-  - service.database
+  - service.mariadb
   - lang.python
 
