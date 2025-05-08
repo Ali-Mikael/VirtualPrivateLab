@@ -7,32 +7,40 @@
 $initscript = <<-INITSCRIPT
   set -o verbose
   apt update && apt upgrade -y
-  apt install -y curl
+  apt install -y curl tree gnupg
 INITSCRIPT
+
 
 # Install Salt
 # ---------------
 
-$salt_install_bootstrap = <<-SCRIPT
+# Using bootstrap method
+$salt_install_bootstrap = <<-'SCRIPT'
   # If using bootstrap method remove "apt install" from the Minion/Master script
   # See https://docs.saltproject.io/salt/install-guide/en/latest/ for more
   curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
   sh bootstrap-salt.sh -P
 SCRIPT
 
-$salt_install_apt = <<-SCRIPT
+
+# Using APT
+$salt_install_apt = <<-'SCRIPT'
   # Ensure keyrings dir exists
   mkdir -p /etc/apt/keyrings
-  # Download public key
-  curl -fsSL https://packages.broadcom.com/artifactory/api/security/keypair/SaltProjectKey/public | sudo tee /etc/apt/keyrings/salt-archive-keyring.pgp
+
+  # Copy SaltProject pub key to keyrings dir  
+  cp /home/vagrant/SaltProjectKey.gpg.pub /etc/apt/keyrings/salt-archive-keyring.pgp
+
   # Create apt repo target configuration
-  curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources
+  curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.sources | sudo tee /etc/apt/sources.list.d/salt.sources > /dev/null
+
+  # Update metadata
   apt update
 SCRIPT
 
 # Salt-Minion setup script
 # ------------------------
-$minion = <<-MINION
+$minion = <<-'MINION'
   # Install the salt-minion
   apt install salt-minion -y
 
@@ -47,7 +55,7 @@ MINION
 
 # Salt-Master setup script
 # ------------------------
-$master = <<-MASTER
+$master = <<-'MASTER'
   # Installing salt-master
   apt install salt-master -y
 
@@ -84,6 +92,9 @@ Vagrant.configure("2") do |config|
 
         # Disable VBox shared folder (using rsync instead)
         config.vm.synced_folder ".", "/vagrant", disabled: true
+	
+	# Adding /files folder from the repo to vms
+	config.vm.synced_folder "./files", "/home/vagrant", type: "rsync", rsync__auto: true
 
 	# Virtualbox specific configurations for VMs
 	config.vm.provider "virtualbox" do |vb|
@@ -102,6 +113,7 @@ Vagrant.configure("2") do |config|
           # Syncing the repo salt folder to salt-master under /srv/salt (the file roots path)
           # Use rsync instead of VBadditions syncing
           master.vm.synced_folder "./salt", "/srv/salt", type: "rsync", rsync__auto: true
+	  master.vm.synced_folder "./pillar", "/srv/pillar", type: "rsync", rsync__auto: true
 
 	  # Provision the master VM
 	  master.vm.provision "shell", inline: $initscript
