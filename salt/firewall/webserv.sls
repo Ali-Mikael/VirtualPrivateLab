@@ -1,21 +1,18 @@
 # /srv/salt/firewall/webserv.sls
 
-# - Ensure firewall is installed - 
-#
+# Ensure firewall is installed
 include:
   - firewall
 
 
-# - Enable and start firewalld -
-#
+# Enable and start firewalld
 firewalld_service:
   service.running:
     - name: firewalld
     - enable: True
 
 
-# - Allow SSH -
-#
+# Allow SSH
 allow_ssh:
   module.run:
     - name: firewalld.add_service
@@ -27,8 +24,7 @@ allow_ssh:
       - service: firewalld_service
 
 
-# - Allow HTTP -
-#
+# Allow HTTP
 allow_http:
   module.run:
     - name: firewalld.add_service
@@ -40,8 +36,7 @@ allow_http:
       - service: firewalld_service
 
 
-# - Allow HTTPS -
-#
+# Allow HTTPS
 allow_https:
   module.run:
     - name: firewalld.add_service
@@ -53,8 +48,7 @@ allow_https:
       - service: firewalld_service
 
 
-# - Reload firewalld to apply changes -
-#
+# Reload firewalld to apply changes
 firewalld_reload:
   cmd.run:
     - name: firewall-cmd --reload

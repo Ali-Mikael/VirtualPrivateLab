@@ -1,7 +1,6 @@
 # /srv/salt/common/git
 
-# - Git install - 
-#
+# Git install
 git:
   pkg.installed:
     - name: git

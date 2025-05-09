@@ -1,7 +1,6 @@
 # /srv/salt/firewall/db.sls
 
-# - Ensure firewall is installed - 
-#
+# Ensure firewall is installed
 include:
   - firewall 
 
@@ -13,8 +12,7 @@ firewalld_service:
     - enable: True
 
 
-# - Allow MySQL port 3306 -
-#
+# Allow MySQL port 3306
 allow_mysql:
   module.run:
     - name: firewalld.add_port
@@ -26,8 +24,7 @@ allow_mysql:
       - service: firewalld_service
 
 
-# - Allow SSH -
-#
+# Allow SSH
 allow_ssh:
   module.run:
     - name: firewalld.add_service

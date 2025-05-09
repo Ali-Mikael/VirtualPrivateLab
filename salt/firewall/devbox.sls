@@ -1,22 +1,18 @@
 # /srv/salt/firewall/devbox.sls
 
-# - Ensure firewall is installed -
-#
+# Ensure firewall is installed
 include:
   - firewall
 
 
-# - Enable and start firewalld -
-#
+# Enable and start firewalld
 firewalld_service:
   service.running:
     - name: firewalld
     - enable: True
 
 
-# - Allow SSH -
-# Change the port value if SSH runs on a non-standard port
-#
+# Allow SSH
 allow_ssh:
   module.run:
     - name: firewalld.add_service
@@ -28,8 +24,7 @@ allow_ssh:
       - service: firewalld_service
 
 
-# - Reload firewalld to apply changes -
-#
+# Reload firewalld to apply changes
 firewalld_reload:
   cmd.run:
     - name: firewall-cmd --reload

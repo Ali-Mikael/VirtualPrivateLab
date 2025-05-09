@@ -1,13 +1,11 @@
 # /srv/salt/service/mysql/init.sls
 
-# - Install mysql -
-#
+# Install mysql
 mysql:
   pkg.installed:
     - name: mysql-server
 
-# - mysql service enabled, up & runnning -
-#
+# Enable & run
 sql_service:
   service.running:
     - name: mysql

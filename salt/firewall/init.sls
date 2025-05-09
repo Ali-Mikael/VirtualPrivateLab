@@ -1,7 +1,6 @@
 # /srv/salt/firewall/init.sls
 
-# - Install firewalld -
-#
+# Install firewalld
 install_firewalld:
   pkg.installed:
     - pkgs:

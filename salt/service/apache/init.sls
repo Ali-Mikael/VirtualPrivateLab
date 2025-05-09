@@ -1,14 +1,12 @@
 # /srv/salt/service/apache/init.sls
 
 
-# - Apache install -
-# 
+# Apache install
 apache2:
   pkg.installed
 
 
-# - Ensuring the service is enabled & running -
-#
+# Enable & run
 apache_service:
   service.running:
     - name: apache2
@@ -17,8 +15,7 @@ apache_service:
       - pkg: apache2
 
 
-# - Managing the index file -
-#
+# Managing the index file
 /var/www/html/index.html:
   file.managed:
     - source: salt://service/apache/sites/index.html

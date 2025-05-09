@@ -1,7 +1,7 @@
 # /srv/salt/role/devbox.sls
 
-# - Define the developer workstation role -
-#
+# - Define the developer workstation - 
+
 include:
   - lang
   - tool

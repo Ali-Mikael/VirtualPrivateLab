@@ -1,7 +1,6 @@
 # /srv/salt/lang/nodejs.sls
 
-# - Install javascript -
-#
+# Install javascript
 nodejs:
   pkg.installed:
     - pkgs:

@@ -1,15 +1,13 @@
 # /srv/salt/service/docker/init.sls
 
-# - Install docker -
-#
+# Install docker
 docker: 
   pkg.installed:
     - name: docker.io
 
 
 
-# - Ensure docker is enabled and running -
-#
+# Ensure docker is enabled and running
 docker_service:
   service.running:
     - name: docker

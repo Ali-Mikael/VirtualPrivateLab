@@ -1,12 +1,12 @@
 # /srv/salt/service/mariadb/init.sls
 
 
-# Necessary dependency install (for preseeding)
+# Necessary dependency install
 debconf-utils:
   pkg.installed
 
 
-# Preseed the root password. (to be done before db install)
+# Preseed the root password
 set_mariadb_root:
   debconf.set:
     - name: mariadb-server
@@ -17,7 +17,6 @@ set_mariadb_root:
       - pkg: debconf-utils
 
 # Install mariadb
-#
 mariadb_install:
   pkg.installed:
     - pkgs:
@@ -27,7 +26,6 @@ mariadb_install:
       - debconf: set_mariadb_root
 
 # Ensure service is running
-#
 mariadb_service:
   service.running:
     - name: mariadb

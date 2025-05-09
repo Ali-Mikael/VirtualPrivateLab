@@ -1,10 +1,6 @@
 # /srv/salt/user/user1.sls
 
-# NOTE: Remember to configure password!
-#       Hash the password & append it as "-password: <hash>"              
-
-#       Keep also in mind that the "sudo group" is mostly used on debian/debian-based systems.
-#       Other distros might use "wheel". Check with your distro before applying
+# NOTE: Remember to configure password using pillars!
 
 user1:
   user.present:
@@ -13,4 +9,5 @@ user1:
     - home: /home/user1
     - createhome: true
     - group: sudo
+    - password: {{ salt['pillar.get']('password', '') }}
 

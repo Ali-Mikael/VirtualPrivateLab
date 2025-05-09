@@ -1,14 +1,13 @@
 # /srv/salt/common/ssh.sls
 
-# - SSH server install -
-#
+# SSH server install
 ssh-server:
   pkg.installed:
     - name: openssh-server
 
 
 
-# - Managing the SSHd config file -
+# Managing the SSHd config file
 #
 /etc/ssh/sshd_config:
   file.managed:
@@ -20,8 +19,7 @@ ssh-server:
       - pkg: ssh-server
 
 
-# - Service enabled / up & running. Will also look out for changes in the config file -
-#
+# Enable & run
 sshd:
   service.running:
     - name: ssh

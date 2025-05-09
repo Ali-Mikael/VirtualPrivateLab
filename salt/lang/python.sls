@@ -1,8 +1,7 @@
 # /srv/salt/lang/python.sls
 
-# - python/pip install -
-#
-py_pkg:
+# python/pip install
+python:
   pkg.installed:
     - name: python3
 
