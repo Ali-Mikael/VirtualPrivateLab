@@ -2,6 +2,9 @@
 
 base:
 
+  '*':
+    - user.user1
+
   'db-serv':
     - database
 
