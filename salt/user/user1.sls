@@ -8,6 +8,7 @@ user1:
     - shell: /bin/bash
     - home: /home/user1
     - createhome: true
-    - group: sudo
+    - groups:
+      - sudo
     - password: {{ salt['pillar.get']('password', '') }}
 
