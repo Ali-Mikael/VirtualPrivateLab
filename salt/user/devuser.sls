@@ -1,8 +1,7 @@
 # /srv/salt/user/devuser.sls
 
 
-# NOTE: Remember to configure password!
-# 	Use either a hash stored in this file or create it using pillars
+# NOTE: Remember to configure password in /srv/pillar/user/devuser/init.sls
 devuser:
   user.present:
     - fullname: Developer
