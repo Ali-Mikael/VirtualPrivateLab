@@ -1,5 +1,8 @@
 # /srv/salt/service/nginx/init.sls
 
+include:
+  - service.apache.kill
+
 # Install nginx
 install_nginx:
   pkg.installed:

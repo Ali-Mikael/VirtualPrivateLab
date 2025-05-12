@@ -1,5 +1,7 @@
 # /srv/salt/service/apache/init.sls
 
+include:
+  - service.nginx.kill
 
 # Apache install
 apache2:
