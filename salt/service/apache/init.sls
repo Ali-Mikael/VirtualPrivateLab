@@ -20,7 +20,7 @@ apache_service:
 # Managing the index file
 /var/www/html/index.html:
   file.managed:
-    - source: salt://service/apache/sites/index.html
+    - source: salt://service/apache/files/index.html
     - user: www-data
     - group: www-data
     - mode: 644
