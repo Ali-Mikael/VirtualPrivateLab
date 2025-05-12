@@ -28,9 +28,18 @@ nginx_service:
 
 
 # Managing the index.html file
-/usr/share/nginx/html/index.html:
+/var/www/html/index.html:
   file.managed:
     - source: salt://service/nginx/files/index.html
     - user: root
     - group: root
     - mode: 644
+
+
+# Managing the sites-available/default file
+/etc/nginx/sites-available/default:
+  file.managed:
+    - source: salt://service/nginx/files/default
+    - user: root
+    - group: root
+    - mode: 640 
