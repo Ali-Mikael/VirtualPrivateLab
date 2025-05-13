@@ -10,3 +10,6 @@ base:
 
   'devbox':
     - user.devuser
+
+  'web-serv':
+    - user.webadmin
