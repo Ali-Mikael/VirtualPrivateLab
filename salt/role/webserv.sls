@@ -5,4 +5,5 @@
 include:
   - lang.python
   - lang.java
-  - service.apache
+  - service.nginx
+  - user.webadmin

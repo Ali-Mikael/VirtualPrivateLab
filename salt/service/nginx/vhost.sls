@@ -1,47 +1,56 @@
 # /srv/salt/service/nginx/vhost.sls
 
 include:
+  - user.webadmin
   - service.nginx
 
 
-# Manage the file in /nginx/sites-available/
+# Manage the virtual host config file
 /etc/nginx/sites-available/webserv1:
   file.managed:
     - source: salt://service/nginx/files/webserv1.conf
     - user: root
     - group: root
     - mode: 644
+    - require:
+      - pkg: nginx
 
 
-# Symlink from -available to -enabled 
+# Enable site by symlinking it to sites-enabled 
 /etc/nginx/sites-enabled/webserv1:
   file.symlink:
     - target: /etc/nginx/sites-available/webserv1
     - force: True
+    - require:
+      - file: /etc/nginx/sites-available/webserv1
 
 
 # Manage document roots
-
-webserv1_document_root:
+/var/www/webserv1/html:
   file.directory:
-    - name: /var/www/webserv1/html
-    - user: vagrant
-    - group: vagrant
+    - user: webadmin
+    - group: www-data
     - mode: 755
     - makedirs: True
+    - recurse:
+      - user
+      - group
+    - require:
+      - user: webadmin
 
 
+# Deploy and manage initial index.html
 /var/www/webserv1/html/index.html:
   file.managed:
     - source: salt://service/nginx/files/index.html
-    - user: vagrant
-    - group: vagrant
+    - user: webadmin
+    - group: www-data
     - mode: 644
     - require: 
-      - file: webserv1_document_root
+      - file: /var/www/webserv1/html
 
 
-# Restart nginx after applying vhost config
+# Reload nginx upon changes to virtual host config
 nginx:
   service.running:
     - reload: True

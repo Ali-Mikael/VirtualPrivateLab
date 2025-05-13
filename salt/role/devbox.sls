@@ -8,3 +8,4 @@ include:
   - service.docker
   - common.ssh
   - common.git
+  - user.devuser

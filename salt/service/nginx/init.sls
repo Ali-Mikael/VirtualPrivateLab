@@ -30,7 +30,7 @@ nginx_service:
     - mode: 640
 
 
-# Managing the index.html file
+# Managing the index file
 /var/www/html/index.html:
   file.managed:
     - source: salt://service/nginx/files/index.html
@@ -39,10 +39,18 @@ nginx_service:
     - mode: 644
 
 
-# Managing the sites-available/default file
-/etc/nginx/sites-available/default:
+# Managing the default file
+default_available:
   file.managed:
+    - name: /etc/nginx/sites-available/default
     - source: salt://service/nginx/files/default
     - user: root
     - group: root
     - mode: 640 
+
+
+/etc/nginx/sites-enabled/default:
+  file.symlink:
+    - target: /etc/nginx/sites-available/default
+    - require:
+      - file: default_available
