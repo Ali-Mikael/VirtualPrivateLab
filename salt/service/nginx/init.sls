@@ -49,6 +49,7 @@ default_available:
     - mode: 640 
 
 
+# Enabling the site by symlinking it to sites-enabled
 /etc/nginx/sites-enabled/default:
   file.symlink:
     - target: /etc/nginx/sites-available/default
