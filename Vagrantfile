@@ -16,7 +16,6 @@ INITSCRIPT
 
 # Using bootstrap method
 $salt_install_bootstrap = <<-'SCRIPT'
-  # If using bootstrap method remove "apt install" from the Minion/Master script
   # See https://docs.saltproject.io/salt/install-guide/en/latest/ for more
   curl -o bootstrap-salt.sh -L https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.sh
   sh bootstrap-salt.sh -P
