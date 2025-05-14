@@ -1,4 +1,4 @@
-# /srv/salt/pillar/top.sls
+# /srv/pillar/top.sls
 
 base:
 
